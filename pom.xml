@@ -9,7 +9,7 @@
     <version>2.0</version>
     <packaging>jar</packaging>
 
-    <name>Colorblock</name>
+    <name>ColorBlock</name>
 
     <description>Allows players to color any type of colorable block by simply clicking with a dye</description>
     <properties>

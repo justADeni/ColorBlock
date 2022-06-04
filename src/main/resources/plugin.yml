@@ -1,6 +1,6 @@
-name: Colorblock
+name: ColorBlock
 version: '${project.version}'
-main: justadeni.colorblock.Colorblock
+main: justadeni.colorblock.ColorBlock
 api-version: 1.15
 load: STARTUP
 authors: [justADeni]
