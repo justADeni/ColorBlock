@@ -1,0 +1,8 @@
+name: Colorblock
+version: '${project.version}'
+main: justadeni.colorblock.Colorblock
+api-version: 1.15
+load: STARTUP
+authors: [justADeni]
+description: Allows players to color any type of colorable block by simply clicking with a dye
+softdepend: [WorldGuard]
