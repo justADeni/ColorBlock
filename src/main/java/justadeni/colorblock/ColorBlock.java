@@ -168,9 +168,13 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                     Material changedBlockMaterialMaterial = Material.getMaterial(changedDyeMaterial + "_SHULKER_BOX");
                     if (changedBlockMaterialMaterial != null) {
 
-                        Inventory inv = ((ShulkerBox) clickedBlock).getInventory();
+                        Location loc = clickedBlock.getLocation();
+                        Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
+
                         clickedBlock.setType(changedBlockMaterialMaterial);
-                        ((ShulkerBox) clickedBlock).getInventory().setContents(inv.getContents());
+
+                        ((ShulkerBox) clickedBlock.getState()).getInventory().setContents(inv.getContents());
+                        ((ShulkerBox) clickedBlock.getState()).update();
 
                         if (Sounds) {
                             playNotePling(player);
@@ -210,9 +214,13 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                     break;
                 } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_SHULKER_BOX")){
 
-                    Inventory inv = ((ShulkerBox) clickedBlock).getInventory();
+                    Location loc = clickedBlock.getLocation();
+                    Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
+
                     clickedBlock.setType(Material.SHULKER_BOX);
-                    ((ShulkerBox) clickedBlock).getInventory().setContents(inv.getContents());
+
+                    ((ShulkerBox) clickedBlock.getState()).getInventory().setContents(inv.getContents());
+                    ((ShulkerBox) clickedBlock.getState()).update();
 
                     player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
                     if (Sounds){
@@ -327,7 +335,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                 }
             } else {
                 if (e.getPlayer().isSneaking()){
-                    if(e.getPlayer().getInventory().getItemInMainHand() == null || e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
+                    if(e.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
                         if (e.getPlayer().hasPermission("colorblock.undye")) {
                             if (regionSupport) {
                                 if (WG.isInRegion(e.getPlayer())) {
