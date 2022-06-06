@@ -123,19 +123,30 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                     if (changedBlockMaterialMaterial != null) {
                         if (!(changedBlockMaterialMaterial.toString().equals(stringBlockMaterial))) {
 
-                            clickedBlock.setType(changedBlockMaterialMaterial);
+                            if (!stringBlockMaterial.contains("SHULKER_BOX")) {
+
+                                clickedBlock.setType(changedBlockMaterialMaterial);
+
+                            } else {
+                                Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
+
+                                clickedBlock.setType(changedBlockMaterialMaterial);
+
+                                ((ShulkerBox) clickedBlock.getState()).getInventory().setContents(inv.getContents());
+                                ((ShulkerBox) clickedBlock.getState()).update();
+                            }
+
                             if (Sounds) {
                                 playNotePling(player);
                             }
 
-                            if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_BOX")) {
-                                return true;
-                            }
                             if (!(player.getGameMode().toString().equals("CREATIVE"))) {
                                 int amount = item.getAmount();
                                 item.setAmount((amount - 1));
                             }
-
+                            if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_BOX")) {
+                                return true;
+                            }
                         }
                     }
                 } else if (stringBlockMaterial.equals("GLASS")) {
@@ -168,7 +179,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                     Material changedBlockMaterialMaterial = Material.getMaterial(changedDyeMaterial + "_SHULKER_BOX");
                     if (changedBlockMaterialMaterial != null) {
 
-                        Location loc = clickedBlock.getLocation();
+                        //Location loc = clickedBlock.getLocation();
                         Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
 
                         clickedBlock.setType(changedBlockMaterialMaterial);
@@ -214,7 +225,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                     break;
                 } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_SHULKER_BOX")){
 
-                    Location loc = clickedBlock.getLocation();
+                    //Location loc = clickedBlock.getLocation();
                     Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
 
                     clickedBlock.setType(Material.SHULKER_BOX);
@@ -256,6 +267,13 @@ public final class ColorBlock extends JavaPlugin implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
             String blockname = e.getClickedBlock().getBlockData().getMaterial().toString();
+            boolean endswith = blockname.endsWith("_POWDER") ||
+                    blockname.endsWith("_PANE") ||
+                    blockname.endsWith("GLASS") ||
+                    blockname.endsWith("_BOX") ||
+                    blockname.endsWith("_CONCRETE") ||
+                    blockname.endsWith("_TERRACOTTA") ||
+                    blockname.endsWith("_WOOL");
 
             if (e.getItem() != null) {
                 if (e.getItem().toString().contains("DYE")) {
@@ -267,13 +285,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
 
                                     for (int i = 2; i >= 1; ) {
                                         i--;
-                                        if (blockname.endsWith("_POWDER") ||
-                                                blockname.endsWith("_PANE") ||
-                                                blockname.endsWith("GLASS") ||
-                                                blockname.endsWith("_BOX") ||
-                                                blockname.endsWith("_CONCRETE") ||
-                                                blockname.endsWith("_TERRACOTTA") ||
-                                                blockname.endsWith("_WOOL")) {
+                                        if (endswith) {
 
                                             Material BlockMaterial = e.getClickedBlock().getType();
                                             Material DyeMaterial = e.getItem().getType();
@@ -290,13 +302,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                             } else if (!(WG.isInRegion(e.getPlayer()))){
                                 for (int i = 2; i >= 1; ) {
                                     i--;
-                                    if (blockname.endsWith("_POWDER") ||
-                                            blockname.endsWith("_PANE") ||
-                                            blockname.endsWith("_GLASS") ||
-                                            blockname.endsWith("_BOX") ||
-                                            blockname.endsWith("_CONCRETE") ||
-                                            blockname.endsWith("_TERRACOTTA") ||
-                                            blockname.endsWith("_WOOL")) {
+                                    if (endswith) {
                                         Material BlockMaterial = e.getClickedBlock().getType();
                                         Material DyeMaterial = e.getItem().getType();
 
@@ -312,13 +318,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                         } else {
                             for (int i = 2; i >= 1; ) {
                                 i--;
-                                if (Objects.requireNonNull(e.getClickedBlock()).getBlockData().getMaterial().toString().endsWith("_POWDER") ||
-                                        blockname.endsWith("_PANE") ||
-                                        blockname.endsWith("_GLASS") ||
-                                        blockname.endsWith("_BOX") ||
-                                        blockname.endsWith("_CONCRETE") ||
-                                        blockname.endsWith("_TERRACOTTA") ||
-                                        blockname.endsWith("_WOOL")) {
+                                if (endswith) {
                                     Material BlockMaterial = e.getClickedBlock().getType();
                                     Material DyeMaterial = e.getItem().getType();
 
@@ -340,13 +340,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                             if (regionSupport) {
                                 if (WG.isInRegion(e.getPlayer())) {
                                     if (e.getPlayer().hasPermission("colorblock.worldguard")) {
-                                        if (Objects.requireNonNull(e.getClickedBlock()).getBlockData().getMaterial().toString().endsWith("_POWDER") ||
-                                                blockname.endsWith("_PANE") ||
-                                                blockname.endsWith("_GLASS") ||
-                                                blockname.endsWith("_SHULKER_BOX") ||
-                                                blockname.endsWith("_CONCRETE") ||
-                                                blockname.endsWith("_TERRACOTTA") ||
-                                                blockname.endsWith("_WOOL")) {
+                                        if (endswith) {
                                             Material BlockMaterial = e.getClickedBlock().getType();
                                             String stringBlockMaterial = BlockMaterial.toString();
 
@@ -356,13 +350,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                                         }
                                     }
                                 } else {
-                                    if (Objects.requireNonNull(e.getClickedBlock()).getBlockData().getMaterial().toString().endsWith("_POWDER") ||
-                                            blockname.endsWith("_PANE") ||
-                                            blockname.endsWith("_GLASS") ||
-                                            blockname.endsWith("_SHULKER_BOX") ||
-                                            blockname.endsWith("_CONCRETE") ||
-                                            blockname.endsWith("_TERRACOTTA") ||
-                                            blockname.endsWith("_WOOL")) {
+                                    if (endswith) {
                                         Material BlockMaterial = e.getClickedBlock().getType();
                                         String stringBlockMaterial = BlockMaterial.toString();
 
@@ -372,13 +360,7 @@ public final class ColorBlock extends JavaPlugin implements Listener {
                                     }
                                 }
                             } else {
-                                if (Objects.requireNonNull(e.getClickedBlock()).getBlockData().getMaterial().toString().endsWith("_POWDER") ||
-                                        blockname.endsWith("_PANE") ||
-                                        blockname.endsWith("_GLASS") ||
-                                        blockname.endsWith("_SHULKER_BOX") ||
-                                        blockname.endsWith("_CONCRETE") ||
-                                        blockname.endsWith("_TERRACOTTA") ||
-                                        blockname.endsWith("_WOOL")) {
+                                if (endswith) {
                                     Material BlockMaterial = e.getClickedBlock().getType();
                                     String stringBlockMaterial = BlockMaterial.toString();
 
