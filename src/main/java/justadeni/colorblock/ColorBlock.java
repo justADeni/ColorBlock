@@ -209,53 +209,66 @@ public final class ColorBlock extends JavaPlugin implements Listener {
 
             if (stringBlockMaterial.contains(string)) {
 
-                if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_PANE")){
-                    clickedBlock.setType(Material.GLASS_PANE);
-                    player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
-                    if (Sounds){
-                        playNotePling(player);
-                    }
-                    break;
-                } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("GLASS")){
-                    clickedBlock.setType(Material.GLASS);
-                    player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
-                    if (Sounds){
-                        playNotePling(player);
-                    }
-                    break;
-                } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_SHULKER_BOX")){
+                if (!string.equals("WHITE")) {
 
-                    //Location loc = clickedBlock.getLocation();
-                    Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
-
-                    clickedBlock.setType(Material.SHULKER_BOX);
-
-                    ((ShulkerBox) clickedBlock.getState()).getInventory().setContents(inv.getContents());
-                    ((ShulkerBox) clickedBlock.getState()).update();
-
-                    player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
-                    if (Sounds){
-                        playNotePling(player);
-                    }
-                    return true;
-                } else {
-                    if (!string.equals("LIGHT_GRAY") && !string.equals("LIGHT_BLUE")) {
-                        clickedBlock.setType(Material.valueOf(stringBlockMaterial.replaceFirst(string, "WHITE")));
-                        player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
-                        if (Sounds){
+                    if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_PANE")) {
+                        clickedBlock.setType(Material.GLASS_PANE);
+                        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+                            player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
+                        }
+                        if (Sounds) {
                             playNotePling(player);
                         }
                         break;
-                    } else if (string.startsWith("LIGHT_")){
-                        clickedBlock.setType(Material.valueOf(stringBlockMaterial.replaceFirst(string, "WHITE")));
-                        player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
-                        if (Sounds){
+                    } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("GLASS")) {
+                        clickedBlock.setType(Material.GLASS);
+                        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+                            player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
+                        }
+                        if (Sounds) {
                             playNotePling(player);
                         }
                         break;
+                    } else if (clickedBlock.getBlockData().getMaterial().toString().endsWith("_SHULKER_BOX")) {
+
+                        //Location loc = clickedBlock.getLocation();
+                        Inventory inv = ((ShulkerBox) clickedBlock.getState()).getSnapshotInventory();
+
+                        clickedBlock.setType(Material.SHULKER_BOX);
+
+                        ((ShulkerBox) clickedBlock.getState()).getInventory().setContents(inv.getContents());
+                        ((ShulkerBox) clickedBlock.getState()).update();
+
+                        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+                            player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
+                        }
+                        if (Sounds) {
+                            playNotePling(player);
+                        }
+                        return true;
+                    } else {
+                        if (!string.equals("LIGHT_GRAY") && !string.equals("LIGHT_BLUE")) {
+                            clickedBlock.setType(Material.valueOf(stringBlockMaterial.replaceFirst(string, "WHITE")));
+                            if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+                                player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
+                            }
+                            if (Sounds) {
+                                playNotePling(player);
+                            }
+                            break;
+                        } else if (string.startsWith("LIGHT_")) {
+                            clickedBlock.setType(Material.valueOf(stringBlockMaterial.replaceFirst(string, "WHITE")));
+                            if (!player.getGameMode().equals(GameMode.CREATIVE)) {
+                                player.getInventory().setItemInMainHand(new ItemStack(Material.valueOf(string + "_DYE")));
+                            }
+                            if (Sounds) {
+                                playNotePling(player);
+                            }
+                            break;
+                        }
                     }
+
                 }
-
             }
         }
 
