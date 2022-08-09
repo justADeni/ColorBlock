@@ -1,6 +1,8 @@
 [![GitHub tag](https://img.shields.io/github/tag/justADeni/ColorBlock?include_prereleases=&sort=semver&color=blue)](https://github.com/justADeni/ColorBlock/releases/)
 [![License](https://img.shields.io/badge/License-BSD--3_-blue)](#license)
 
+# This repo has been archived, instead there is new [ColorBlock2](https://github.com/justADeni/ColorBlock2)
+
 # ColorBlock
 allows you to color block by clicking it with dye
 
